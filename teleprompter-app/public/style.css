@@ -1,0 +1,168 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  background: black;
+  color: white;
+  font-family: sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#cameraPreview {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 160px;
+  height: 120px;
+  border: 2px solid white;
+  z-index: 10;
+  background: black;
+  object-fit: cover;
+}
+
+#controls {
+  background: #111;
+  padding: 10px;
+  z-index: 5;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+#controls textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  background: #222;
+  color: white;
+  border: 1px solid #444;
+  padding: 8px;
+  resize: vertical;
+  border-radius: 4px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+
+button:hover {
+  background: #444;
+  border-color: #777;
+}
+
+button.toggle-btn.active {
+  background: #0066cc;
+  border-color: #3399ff;
+}
+
+label {
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+input[type=range] {
+  vertical-align: middle;
+}
+
+/* Flip transforms */
+.flipped-h {
+  transform: scaleX(-1);
+}
+
+.flipped-v {
+  transform: scaleY(-1);
+}
+
+#teleprompter {
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding: 40px;
+  background: black;
+  transition: transform 0.3s ease;
+}
+
+#scrollContent {
+  white-space: pre-wrap;
+  font-size: 2em;
+  line-height: 1.6em;
+}
+
+#recordingList {
+  background: #111;
+  padding: 10px;
+  border-top: 1px solid #333;
+  font-size: 0.9em;
+  color: #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#recordingList ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#recordingList li {
+  margin: 4px 0;
+  border-bottom: 1px solid #222;
+  padding-bottom: 4px;
+}
+
+#recordingIndicator {
+  position: absolute;
+  top: 140px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  z-index: 20;
+}
+
+#recDot {
+  width: 10px;
+  height: 10px;
+  background: red;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+button.recording {
+  background: #a00 !important;
+  border-color: #d33 !important;
+  color: white !important;
+}
+
+.hidden {
+  display: none !important;
+}
