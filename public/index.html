@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teleprompter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="controls">
+        <textarea id="scriptInput" placeholder="Enter script here..."></textarea>
+        <div class="control-group">
+            <button id="startScroll">Start Scroll</button>
+            <button id="stopScroll">Stop Scroll</button>
+            <label>Speed <input type="range" id="speedControl" min="1" max="10" value="3"></label>
+            <label>Font Size <input type="range" id="fontSizeControl" min="16" max="64" value="32"></label>
+            <label><input type="checkbox" id="flipH"> Flip H</label>
+            <label><input type="checkbox" id="flipV"> Flip V</label>
+            <button id="recordButton">Start Recording</button>
+        </div>
+    </div>
+    <div id="teleprompter">
+        <div id="scrollContent"></div>
+    </div>
+    <video id="cameraPreview" autoplay muted playsinline></video>
+    <div id="recordingIndicator" hidden>
+        <span class="dot"></span> Recording...
+    </div>
+    <ul id="recordings"></ul>
+    <script src="script.js"></script>
+</body>
+</html>
