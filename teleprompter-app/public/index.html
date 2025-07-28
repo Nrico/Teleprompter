@@ -24,16 +24,25 @@
         <button id="startVideoRec">🎥 Record Video</button>
         <button id="stopRec">⏹ Stop Recording</button>
       </div>
-      <div class="button-row">
-        <button id="toggleCamera">Toggle Camera</button>
-        <label>Video Source: <select id="videoSelect"></select></label>
-        <label>Audio Source: <select id="audioSelect"></select></label>
+        <div class="button-row">
+          <button id="toggleCamera">Toggle Camera</button>
+          <label>Video Source: <select id="videoSelect"></select></label>
+          <label>Audio Source: <select id="audioSelect"></select></label>
+        </div>
+        <div class="button-row">
+          <label>Voice Tracking:
+            <select id="voiceMode">
+              <option value="none">None</option>
+              <option value="simple">Web Speech</option>
+              <option value="ios">iOS Plugin</option>
+            </select>
+          </label>
+        </div>
       </div>
-    </div>
-    <div id="recordingIndicator" class="hidden">
-      <span id="recDot"></span>
-      <span id="recType">● Recording</span>
-    </div>
+      <div id="recordingIndicator" class="hidden">
+        <span id="recDot"></span>
+        <span id="recType">● Recording</span>
+      </div>
 
     <div id="teleprompter">
       <div id="scrollContent"></div>
