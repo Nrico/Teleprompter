@@ -21,6 +21,7 @@ const recTypeLabel = document.getElementById("recType");
 const toggleCameraBtn = document.getElementById("toggleCamera");
 const videoSelect = document.getElementById("videoSelect");
 const audioSelect = document.getElementById("audioSelect");
+const voiceModeSelect = document.getElementById("voiceMode");
 
 let scrollInterval = null;
 let mediaRecorder;
@@ -35,6 +36,9 @@ let takeCounts = {
   audio: 0,
   video: 0
 };
+
+let simpleRecognizer = null;
+let iosListener = null;
 
 scrollContent.textContent = scriptInput.value;
 
@@ -51,10 +55,12 @@ startBtn.addEventListener("click", () => {
   scrollInterval = setInterval(() => {
     teleprompter.scrollBy(0, parseInt(speedControl.value));
   }, 50);
+  if (voiceModeSelect.value !== "none") startVoiceRecognition();
 });
 
 stopBtn.addEventListener("click", () => {
   if (scrollInterval) clearInterval(scrollInterval);
+  stopVoiceRecognition();
 });
 
 flipHBtn.addEventListener("click", () => {
@@ -195,3 +201,52 @@ audioSelect.addEventListener("change", async () => {
 navigator.mediaDevices.addEventListener("devicechange", populateDevices);
 
 startCameraPreview().then(populateDevices);
+
+function stopVoiceRecognition() {
+  if (simpleRecognizer) {
+    simpleRecognizer.onresult = null;
+    simpleRecognizer.stop();
+    simpleRecognizer = null;
+  }
+  const plugin = window.Capacitor?.Plugins?.SpeechRecognizer;
+  if (plugin) {
+    plugin.stopRecognition();
+  }
+  if (iosListener) {
+    iosListener.remove();
+    iosListener = null;
+  }
+}
+
+async function startVoiceRecognition() {
+  stopVoiceRecognition();
+  if (voiceModeSelect.value === "simple") {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      console.warn("Web Speech API not supported");
+      return;
+    }
+    simpleRecognizer = new SpeechRecognition();
+    simpleRecognizer.continuous = true;
+    simpleRecognizer.interimResults = true;
+    simpleRecognizer.onresult = (e) => {
+      const transcript = Array.from(e.results)
+        .map(r => r[0].transcript)
+        .join(" ");
+      console.log("Simple transcript", transcript);
+    };
+    simpleRecognizer.start();
+  } else if (voiceModeSelect.value === "ios") {
+    const plugin = window.Capacitor?.Plugins?.SpeechRecognizer;
+    if (!plugin) {
+      console.warn("SpeechRecognizer plugin not available");
+      return;
+    }
+    await plugin.requestPermissions();
+    iosListener = plugin.addListener("transcriptionUpdate", data => {
+      console.log("iOS transcript", data.text);
+    });
+    await plugin.startRecognition();
+  }
+}
+
