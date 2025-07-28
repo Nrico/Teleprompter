@@ -1,0 +1,14 @@
+{
+  "name": "teleprompter",
+  "version": "1.0.0",
+  "description": "A phone based teleprompter",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx cap serve",
+    "build": "npx cap sync"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
